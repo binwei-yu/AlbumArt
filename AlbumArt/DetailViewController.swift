@@ -10,10 +10,21 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    // MARK: Properties
+    @IBOutlet weak var albumLabel: UILabel!
+    @IBOutlet weak var artistLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+    
+    var albumName: String?
+    var artistName: String?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        albumLabel.text = albumName
+        artistLabel.text = artistName
     }
     
 

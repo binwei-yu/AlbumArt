@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF913D9B2223C3420098C4D2 /* AlbumService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF913D9A2223C3420098C4D2 /* AlbumService.swift */; };
+		BF913D9D2223CF260098C4D2 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF913D9C2223CF260098C4D2 /* MasterViewController.swift */; };
+		BF913D9F22243CD60098C4D2 /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF913D9E22243CD60098C4D2 /* AlbumViewCell.swift */; };
 		BFA8326322239E4800CCF650 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA8326222239E4800CCF650 /* AppDelegate.swift */; };
-		BFA8326522239E4800CCF650 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA8326422239E4800CCF650 /* ViewController.swift */; };
 		BFA8326822239E4800CCF650 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFA8326622239E4800CCF650 /* Main.storyboard */; };
 		BFA8326A22239E4900CCF650 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFA8326922239E4900CCF650 /* Assets.xcassets */; };
 		BFA8326D22239E4900CCF650 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFA8326B22239E4900CCF650 /* LaunchScreen.storyboard */; };
@@ -35,9 +37,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF913D9A2223C3420098C4D2 /* AlbumService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumService.swift; sourceTree = "<group>"; };
+		BF913D9C2223CF260098C4D2 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		BF913D9E22243CD60098C4D2 /* AlbumViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
 		BFA8325F22239E4800CCF650 /* AlbumArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlbumArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFA8326222239E4800CCF650 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BFA8326422239E4800CCF650 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BFA8326722239E4800CCF650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BFA8326922239E4900CCF650 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BFA8326C22239E4900CCF650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -100,12 +104,14 @@
 			isa = PBXGroup;
 			children = (
 				BFA8326222239E4800CCF650 /* AppDelegate.swift */,
-				BFA8326422239E4800CCF650 /* ViewController.swift */,
+				BF913D9C2223CF260098C4D2 /* MasterViewController.swift */,
+				BF913D9E22243CD60098C4D2 /* AlbumViewCell.swift */,
+				BFA832902223A2CE00CCF650 /* DetailViewController.swift */,
+				BF913D9A2223C3420098C4D2 /* AlbumService.swift */,
 				BFA8326622239E4800CCF650 /* Main.storyboard */,
 				BFA8326922239E4900CCF650 /* Assets.xcassets */,
 				BFA8326B22239E4900CCF650 /* LaunchScreen.storyboard */,
 				BFA8326E22239E4900CCF650 /* Info.plist */,
-				BFA832902223A2CE00CCF650 /* DetailViewController.swift */,
 			);
 			path = AlbumArt;
 			sourceTree = "<group>";
@@ -259,9 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF913D9D2223CF260098C4D2 /* MasterViewController.swift in Sources */,
 				BFA832912223A2CE00CCF650 /* DetailViewController.swift in Sources */,
-				BFA8326522239E4800CCF650 /* ViewController.swift in Sources */,
 				BFA8326322239E4800CCF650 /* AppDelegate.swift in Sources */,
+				BF913D9B2223C3420098C4D2 /* AlbumService.swift in Sources */,
+				BF913D9F22243CD60098C4D2 /* AlbumViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
