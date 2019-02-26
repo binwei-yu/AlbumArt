@@ -49,11 +49,11 @@ class MasterViewController: UICollectionViewController, FavoriteDelegate {
     }
     
     func removeFavorite(_ album: Album) {
-        for (index, item) in favorites.enumerated() {
+        var index: Int = 0
+        for (i, item) in favorites.enumerated() {
             if item.collectionId == album.collectionId {
-                favorites.remove(at: index)
-                let removeIndexPath = IndexPath(row: index, section: 0)
-                self.collectionView.deleteItems(at: [removeIndexPath])
+                favorites.remove(at: i)
+                index = i
                 break
             }
         }
@@ -63,6 +63,10 @@ class MasterViewController: UICollectionViewController, FavoriteDelegate {
         if self.currentView == 0 {
             // Hide favorite icon
             hideFavoriteImage(of: album, isHidden: true)
+        }
+        else {
+            let removeIndexPath = IndexPath(row: index, section: 0)
+            self.collectionView.deleteItems(at: [removeIndexPath])
         }
     }
     
