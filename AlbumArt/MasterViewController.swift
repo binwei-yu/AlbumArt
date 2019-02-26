@@ -10,13 +10,71 @@ import UIKit
 
 private let reuseIdentifier = "AlbumCell"
 
-class MasterViewController: UICollectionViewController {
+protocol FavoriteDelegate: class {
+    func addFavorite(_ album: Album)
+    func removeFavorite(_ album: Album)
+}
 
+class MasterViewController: UICollectionViewController, FavoriteDelegate {
+    
     // MARK: Properties
     private let albumService = AlbumService()
+    private var currentView = 0
     public var albums: [Album] = []
+    public var favorites: [Album] = []
+    public var favoritesSet: Set<Int> = []
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    
+    @IBAction func toggle(_ sender: UISegmentedControl) {
+        self.currentView = sender.selectedSegmentIndex
+        self.collectionView.reloadData()
+    }
+    
+    func addFavorite(_ album: Album) {
+        self.favorites.append(album)
+        self.favoritesSet.insert(album.collectionId)
+        
+        // All
+        if self.currentView == 0 {
+            // Show favorite icon
+            hideFavoriteImage(of: album, isHidden: false)
+        }
+        // Favorite
+        else {
+            let insertIndexPath = IndexPath(row: self.collectionView.visibleCells.count, section: 0)
+            self.collectionView.insertItems(at: [insertIndexPath])
+        }
+    }
+    
+    func removeFavorite(_ album: Album) {
+        for (index, item) in favorites.enumerated() {
+            if item.collectionId == album.collectionId {
+                favorites.remove(at: index)
+                let removeIndexPath = IndexPath(row: index, section: 0)
+                self.collectionView.deleteItems(at: [removeIndexPath])
+                break
+            }
+        }
+        self.favoritesSet.remove(album.collectionId)
+        
+        // All
+        if self.currentView == 0 {
+            // Hide favorite icon
+            hideFavoriteImage(of: album, isHidden: true)
+        }
+    }
+    
+    private func hideFavoriteImage(of album: Album, isHidden: Bool) {
+        for cell in self.collectionView.visibleCells {
+            let cell = cell as! AlbumViewCell
+            if cell.albumId == album.collectionId {
+                cell.favoriteImage.isHidden = isHidden
+                return
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,18 +127,41 @@ class MasterViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return albums.count
+        if self.currentView == 0 {
+            return albums.count
+        }
+        else {
+            return favorites.count
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AlbumViewCell
         
         // Configure the cell
-        let album = albums[indexPath.row]
-        albumService.fetchImage(for: album.artworkUrl100) { image, error in
-            if image != nil {
-                cell.albumCoverImage.image = image
+        if self.currentView == 0 {
+            let album = albums[indexPath.row]
+            albumService.fetchImage(for: album.artworkUrl100) { image, error in
+                cell.albumCoverImage.image = image ?? UIImage(named: "Unknown Cover")
             }
+            if favoritesSet.contains(album.collectionId) {
+                cell.favoriteImage.isHidden = false
+            }
+            else {
+                cell.favoriteImage.isHidden = true
+            }
+            cell.albumId = album.collectionId
+        }
+        else {
+            let album = self.favorites[indexPath.row]
+            albumService.fetchImage(for: album.artworkUrl100) { image, error in
+                if image != nil {
+                    cell.albumCoverImage.image = image
+                }
+            }
+            cell.albumId = album.collectionId
+            // Show favorite icon
+            cell.favoriteImage.isHidden = false
         }
         
         return cell
@@ -91,40 +172,19 @@ class MasterViewController: UICollectionViewController {
         guard let src = sender as? AlbumViewCell else { return }
         guard let index = collectionView.indexPath(for: src)?.row else { return }
         
-        let album = albums[index]
-        dest.albumName = album.collectionName
-        dest.artistName = album.artistName
+        if self.currentView == 0 {
+            if self.favoritesSet.contains(albums[index].collectionId) {
+                dest.isFavorite = true
+            }
+            else {
+                dest.isFavorite = false
+            }
+            dest.album = albums[index]
+        }
+        else {
+            dest.isFavorite = true
+            dest.album = favorites[index]
+        }
+        dest.delegate = self
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }

@@ -15,19 +15,38 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var artistLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     
-    var albumName: String?
-    var artistName: String?
-    
+    var album: Album?
+    var isFavorite: Bool?
+    var delegate: FavoriteDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let album = album, let isFavorite = isFavorite else { return }
         // Do any additional setup after loading the view.
-        albumLabel.text = albumName
-        artistLabel.text = artistName
+        albumLabel.text = album.collectionName
+        artistLabel.text = album.artistName
+        if isFavorite { favoriteButton.setImage(UIImage(named: "Filled Heart"), for: .normal) }
     }
     
-
+    // MARK: Actions
+    @IBAction func tap(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func clickFavoriteButton(_ sender: Any) {
+        guard let album = self.album, let isFavorite = self.isFavorite else { return }
+        if isFavorite {
+            favoriteButton.setImage(UIImage(named: "Empty Heart"), for: .normal)
+            delegate?.removeFavorite(album)
+        }
+        else {
+            favoriteButton.setImage(UIImage(named: "Filled Heart"), for: .normal)
+            delegate?.addFavorite(album)
+        }
+        self.isFavorite = !self.isFavorite!
+    }
+    
     /*
     // MARK: - Navigation
 

@@ -11,4 +11,7 @@ import UIKit
 class AlbumViewCell: UICollectionViewCell {
     // MARK: Properties
     @IBOutlet weak var albumCoverImage: UIImageView!
+    @IBOutlet weak var favoriteImage: UIImageView!
+    
+    var albumId: Int?
 }

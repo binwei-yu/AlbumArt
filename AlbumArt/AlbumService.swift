@@ -69,7 +69,6 @@ class AlbumService {
                 return
             }
             if let image = UIImage(data: data) {
-                print("Success")
                 DispatchQueue.main.async { completion(image, nil) }
             } else {
                 DispatchQueue.main.async { completion(nil, error) }
